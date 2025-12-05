@@ -344,6 +344,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+  /* MOBILE MENU */
+  document.getElementById("menuBtn").onclick = () => {
+    document.getElementById("navMenu").classList.toggle("show-menu");
+  };
+});
 
 
 
