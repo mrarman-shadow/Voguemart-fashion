@@ -1182,6 +1182,53 @@ footer {
   gap: 10px;
   z-index: 9999;
 }
+/* MOBILE NAVIGATION FIX */
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+    margin-right: 15px;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    background: var(--card-bg);
+    width: 180px;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  }
+
+  .nav-links.show-menu {
+    display: block !important;
+  }
+
+  .nav-links li {
+    margin: 12px 0;
+  }
+
+  .nav-links a {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .logout {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
 
 
 
