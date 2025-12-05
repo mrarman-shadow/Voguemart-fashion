@@ -3,290 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Product – VogueMart Admin</title>
+  <title>Products – Admin – VogueMart</title>
 
   <link rel="stylesheet" href="style.css">
 
   <style>
     body {
       margin: 0;
-      background: #f4f7fc;
-      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
       display: flex;
+      font-family: "Poppins", sans-serif;
+      color: var(--text);
     }
 
-    /* Sidebar */
+    /* SIDEBAR */
     .sidebar {
       width: 240px;
-      background: white;
+      background: #024558;
       height: 100vh;
       position: fixed;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
       padding-top: 20px;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.4);
     }
 
     .sidebar h2 {
       text-align: center;
-      color: #0d6efd;
-      margin-bottom: 20px;
+      color: #f8d0a4;
+      margin-bottom: 25px;
+      font-size: 24px;
+      font-weight: 700;
     }
 
     .sidebar a {
       display: block;
       padding: 14px 20px;
-      color: #333;
       text-decoration: none;
-      border-left: 4px solid transparent;
-      transition: 0.2s;
+      color: #f8d0a4;
+      font-size: 15px;
     }
 
     .sidebar a:hover,
     .sidebar a.active {
-      background: #e9f2ff;
-      color: #0d6efd;
-      border-left: 4px solid #0d6efd;
+      background: rgba(255,255,255,0.15);
+      border-left: 4px solid #f8d0a4;
     }
 
-    /* Main */
+    /* MAIN */
     .main {
       margin-left: 240px;
-      padding: 25px;
       width: calc(100% - 240px);
+      padding: 25px;
     }
 
-    /* Top Nav */
     .topnav {
-      background: white;
-      padding: 15px 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .main-title {
+      background: #013a46;
+      padding: 15px;
+      border-radius: 16px;
+      color: #f8d0a4;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+      margin-bottom: 25px;
       font-size: 22px;
-      color: #0d6efd;
       font-weight: 600;
     }
 
-    /* Form Box */
-    .form-box {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      max-width: 600px;
-      margin: auto;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    /* TABLE */
+    .table-box {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+      color: #024558;
     }
 
-    .form-box h2 {
-      color: #0d6efd;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .form-box input,
-    .form-box textarea {
+    table {
       width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
-      font-size: 16px;
+      margin-top: 20px;
+      border-collapse: collapse;
     }
 
-    .form-box button {
-      width: 100%;
+    th, td {
       padding: 12px;
-      background: #0d6efd;
-      color: white;
-      font-size: 17px;
-      border-radius: 8px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+      color: #024558;
+    }
+
+    th {
+      background: #013a46;
+      color: #f8d0a4;
+      font-weight: 600;
+    }
+
+    button {
+      padding: 6px 14px;
+      border-radius: 999px;
       border: none;
       cursor: pointer;
+      font-weight: 600;
+      background: #ff6b5a;
+      color: #fff;
     }
 
-    /* Toast */
-    .toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: white;
-      border-left: 5px solid #0d6efd;
-      padding: 12px 16px;
-      border-radius: 10px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.15);
-      display: flex;
-      gap: 10px;
-      animation: fade 0.4s ease;
+    button:hover {
+      opacity: 0.9;
     }
-
-    @keyframes fade {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; }
-    }
-
   </style>
 
-</head>
+  <!-- ADMIN PROTECT -->
   <script>
-  if (localStorage.getItem("adminLoggedIn") !== "true") {
-    // 🚫 Not logged in as admin → back to admin login
-    window.location.href = "admin-login.html";
-  }
-</script>
+    if (localStorage.getItem("adminLoggedIn") !== "true") {
+      window.location.href = "admin-login.html";
+    }
+  </script>
+</head>
 
 <body>
 
   <!-- SIDEBAR -->
   <div class="sidebar">
     <h2>VogueMart</h2>
-
     <a href="admin.html">Dashboard</a>
-    <a href="products.html">Products</a>
-    <a href="add-product.html" class="active">Add Product</a>
+    <a href="products.html" class="active">Products</a>
+    <a href="add-product.html">Add Product</a>
     <a href="customers.html">Customers</a>
     <a href="orders.html">Orders</a>
-    <a href="#" id="logoutBtn" style="margin-top:20px; color:red;">Logout</a>
+    <a href="#" id="logoutBtn" style="color:#ff7b7b">Logout</a>
   </div>
 
   <!-- MAIN -->
   <div class="main">
+    <div class="topnav">Products</div>
 
-    <!-- TOP NAV -->
-    <div class="topnav">
-      <span class="main-title" id="formTitle">Add Product</span>
-      <button id="logoutTop" style="background:#dc3545;color:white;padding:10px 15px;border:none;border-radius:6px;">Logout</button>
+    <div class="table-box">
+      <h3 style="color:#024558;">Products List</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price (₹)</th>
+            <th>Category</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody id="productsBody"></tbody>
+      </table>
     </div>
-
-    <!-- FORM -->
-    <div class="form-box">
-      <h2 id="titleText">Add New Product</h2>
-
-      <form id="productForm">
-
-        <input type="text" id="pName" placeholder="Product Name" required />
-        <input type="number" id="pPrice" placeholder="Price (₹)" required />
-        <input type="text" id="pCategory" placeholder="Category" required />
-        <textarea id="pDesc" placeholder="Description"></textarea>
-
-        <button type="submit" id="btnSubmit">Add Product</button>
-
-      </form>
-    </div>
-
   </div>
 
-  <!-- FIREBASE LOGIC -->
-  <script type="module">
-    import { app, db } from "./firebase-init.js";
-
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-    import {
-      collection,
-      addDoc,
-      doc,
-      updateDoc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
-
-    const auth = getAuth(app);
-
-    /* ================= PROTECT PAGE ================= */
-    onAuthStateChanged(auth, (user) => {
-      if (!user || user.email !== "voguemart@gmail.com") {
-        window.location.href = "admin-login.html";
-      }
-    });
-
-    /* ================= LOGOUT ================= */
-    const logout = () => {
-      signOut(auth);
-      localStorage.removeItem("adminEmail");
+  <!-- LOGOUT -->
+  <script>
+    document.getElementById("logoutBtn").onclick = () => {
+      localStorage.removeItem("adminLoggedIn");
       window.location.href = "admin-login.html";
     };
+  </script>
 
-    document.getElementById("logoutBtn").onclick = logout;
-    document.getElementById("logoutTop").onclick = logout;
+  <!-- DUMMY DATA (You can link Firebase later) -->
+  <script>
+    const products = [
+      { id: 1, name: "Formal Shirt", price: 799, category: "Men" },
+      { id: 2, name: "Ladies Kurti", price: 999, category: "Women" },
+      { id: 3, name: "Kids T-shirt", price: 399, category: "Kids" }
+    ];
 
-    /* ================= CHECK EDIT MODE ================= */
-    const editId = new URLSearchParams(window.location.search).get("edit");
+    const body = document.getElementById("productsBody");
 
-    if (editId) {
-      document.getElementById("formTitle").textContent = "Edit Product";
-      document.getElementById("titleText").textContent = "Edit Product";
-      document.getElementById("btnSubmit").textContent = "Update Product";
-      loadProduct();
-    }
-
-    async function loadProduct() {
-      const ref = doc(db, "products", editId);
-      const snap = await getDoc(ref);
-
-      if (snap.exists()) {
-        const p = snap.data();
-        document.getElementById("pName").value = p.name;
-        document.getElementById("pPrice").value = p.price;
-        document.getElementById("pCategory").value = p.category;
-        document.getElementById("pDesc").value = p.description || "";
-      }
-    }
-
-    /* ================= SUBMIT FORM ================= */
-    document.getElementById("productForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const name = pName.value.trim();
-      const price = Number(pPrice.value);
-      const category = pCategory.value.trim();
-      const description = pDesc.value.trim();
-
-      if (!name || !price || !category) {
-        showToast("Please fill all required fields", "error");
-        return;
-      }
-
-      if (editId) {
-        await updateDoc(doc(db, "products", editId), {
-          name, price, category, description
-        });
-
-        showToast("Product Updated", "success");
-        setTimeout(() => window.location.href = "products.html", 900);
-
-      } else {
-        await addDoc(collection(db, "products"), {
-          name, price, category, description, createdAt: Date.now()
-        });
-
-        showToast("Product Added", "success");
-        document.getElementById("productForm").reset();
-      }
-    });
-
-    /* ================= TOAST ================= */
-    function showToast(msg, type = "info") {
-      const toast = document.createElement("div");
-      toast.className = "toast";
-      toast.innerHTML = `
-        <strong>${type === "success" ? "✔" : "⚠"}</strong>
-        <span>${msg}</span>
+    products.forEach(p => {
+      body.innerHTML += `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.name}</td>
+          <td>₹${p.price}</td>
+          <td>${p.category}</td>
+          <td><button>Edit</button></td>
+          <td><button>Delete</button></td>
+        </tr>
       `;
-      document.body.appendChild(toast);
-
-      setTimeout(() => toast.remove(), 3200);
-    }
+    });
   </script>
 
 </body>
 </html>
-
 
 
