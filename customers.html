@@ -3,51 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customers – VogueMart Admin</title>
+  <title>Customers – Admin – VogueMart</title>
 
   <link rel="stylesheet" href="style.css">
 
   <style>
     body {
       margin: 0;
-      background: #f4f7fc;
-      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
       display: flex;
+      font-family: "Poppins", sans-serif;
+      color: var(--text);
     }
 
-    /* SIDEBAR */
     .sidebar {
       width: 240px;
-      background: white;
+      background: #024558;
       height: 100vh;
       position: fixed;
       padding-top: 20px;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      box-shadow: 2px 0 12px rgba(0,0,0,0.4);
     }
 
     .sidebar h2 {
       text-align: center;
-      color: #0d6efd;
+      color: #f8d0a4;
+      margin-bottom: 25px;
       font-size: 24px;
-      margin-bottom: 20px;
+      font-weight: 700;
     }
 
     .sidebar a {
       display: block;
       padding: 14px 20px;
       text-decoration: none;
-      color: #333;
-      border-left: 4px solid transparent;
+      color: #f8d0a4;
+      font-size: 15px;
     }
 
     .sidebar a:hover,
     .sidebar a.active {
-      background: #e8f1ff;
-      border-left: 4px solid #0d6efd;
-      color: #0d6efd;
+      background: rgba(255,255,255,0.15);
+      border-left: 4px solid #f8d0a4;
     }
 
-    /* MAIN */
     .main {
       margin-left: 240px;
       width: calc(100% - 240px);
@@ -55,77 +54,73 @@
     }
 
     .topnav {
-      background: white;
-      padding: 15px 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      margin-bottom: 25px;
+      background: #013a46;
+      padding: 15px;
+      border-radius: 16px;
+      color: #f8d0a4;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 600;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .page-title {
-      font-size: 22px;
-      font-weight: 600;
-      color: #0d6efd;
+    .topnav input {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      font-size: 14px;
+      width: 210px;
     }
 
-    /* SEARCH */
-    #searchBox {
-      padding: 12px;
-      width: 250px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    /* TABLE */
     .table-box {
-      background: white;
+      background: var(--card-bg);
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+      color: #024558;
     }
 
     table {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 16px;
       border-collapse: collapse;
     }
 
     th, td {
-      border-bottom: 1px solid #ddd;
-      padding: 14px;
+      padding: 12px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+      color: #024558;
     }
 
     th {
-      background: #f1f6ff;
-      color: #0d6efd;
+      background: #013a46;
+      color: #f8d0a4;
       font-weight: 600;
     }
 
-    .btn-view {
-      background: #0d6efd;
-      color: white;
+    .btn-small {
       padding: 6px 12px;
+      border-radius: 999px;
       border: none;
-      border-radius: 6px;
+      background: #ff6b5a;
+      color: #fff;
       cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
     }
-
-    @media(max-width: 600px) {
-      .sidebar { display: none; }
-      .main { margin-left: 0; width: 100%; }
-    }
-
   </style>
+
+  <!-- ADMIN PROTECT -->
+  <script>
+    if (localStorage.getItem("adminLoggedIn") !== "true") {
+      window.location.href = "admin-login.html";
+    }
+  </script>
 </head>
-<script>
-  if (localStorage.getItem("adminLoggedIn") !== "true") {
-    // 🚫 Not logged in as admin → back to admin login
-    window.location.href = "admin-login.html";
-  }
-</script>
 
 <body>
 
@@ -137,16 +132,14 @@
     <a href="add-product.html">Add Product</a>
     <a href="customers.html" class="active">Customers</a>
     <a href="orders.html">Orders</a>
-    <a href="#" id="logoutBtn" style="color:red;margin-top:20px;">Logout</a>
+    <a href="#" id="logoutBtn" style="color:#ff7b7b">Logout</a>
   </div>
 
   <!-- MAIN -->
   <div class="main">
-
-    <!-- TOP NAV -->
     <div class="topnav">
-      <span class="page-title">Customers</span>
-      <input type="text" id="searchBox" placeholder="Search customers..." />
+      <span>Customers</span>
+      <input type="text" id="searchBox" placeholder="Search customers...">
     </div>
 
     <div class="table-box">
@@ -161,107 +154,68 @@
             <th>Action</th>
           </tr>
         </thead>
-
-        <tbody id="customersTableBody"></tbody>
+        <tbody id="customersBody"></tbody>
       </table>
 
-      <p id="emptyMsg" style="text-align:center;color:#777;margin-top:15px;">No customers found</p>
+      <p id="custEmpty" style="text-align:center;margin-top:14px;">No customers found</p>
     </div>
-
   </div>
 
-
-  <!-- FIREBASE LOGIC -->
-  <script type="module">
-    import { db, app } from "./firebase-init.js";
-
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-    import {
-      collection,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
-
-    const auth = getAuth(app);
-
-    /* ===== PROTECT PAGE ===== */
-    onAuthStateChanged(auth, (user) => {
-      if (!user || user.email !== "voguemart@gmail.com") {
-        window.location.href = "admin-login.html";
-      }
-    });
-
-    /* ===== LOGOUT ===== */
+  <!-- LOGOUT -->
+  <script>
     document.getElementById("logoutBtn").onclick = () => {
-      signOut(auth);
+      localStorage.removeItem("adminLoggedIn");
       window.location.href = "admin-login.html";
     };
+  </script>
 
-    /* ===== LOAD CUSTOMERS ===== */
-    let allCustomers = [];
+  <!-- DEMO DATA + SEARCH -->
+  <script>
+    let customers = [
+      { id: "U01", name: "Arun",  email: "arun@gmail.com",  phone: "9876543210", orders: 3 },
+      { id: "U02", name: "Priya", email: "priya@gmail.com", phone: "9876500000", orders: 5 },
+      { id: "U03", name: "Ravi",  email: "ravi@gmail.com",  phone: "9000000000", orders: 1 }
+    ];
 
-    async function loadCustomers() {
-      const snap = await getDocs(collection(db, "customers"));
-      allCustomers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      renderCustomers(allCustomers);
-    }
+    const body = document.getElementById("customersBody");
+    const empty = document.getElementById("custEmpty");
 
-    function renderCustomers(list) {
-      const body = document.getElementById("customersTableBody");
-      const emptyMsg = document.getElementById("emptyMsg");
-
+    function render(list) {
       body.innerHTML = "";
-
-      if (list.length === 0) {
-        emptyMsg.style.display = "block";
+      if (!list.length) {
+        empty.style.display = "block";
         return;
       }
-
-      emptyMsg.style.display = "none";
+      empty.style.display = "none";
 
       list.forEach(c => {
         body.innerHTML += `
           <tr>
             <td>${c.id}</td>
-            <td>${c.name || "-"}</td>
-            <td>${c.email || "-"}</td>
-            <td>${c.phone || "-"}</td>
-            <td>${c.orders || 0}</td>
-            <td>
-              <button class="btn-view" onclick="viewOrders('${c.id}')">View Orders</button>
-            </td>
+            <td>${c.name}</td>
+            <td>${c.email}</td>
+            <td>${c.phone}</td>
+            <td>${c.orders}</td>
+            <td><button class="btn-small">View Orders</button></td>
           </tr>
         `;
       });
     }
 
-    /* ===== SEARCH ===== */
-    document.getElementById("searchBox").addEventListener("input", () => {
-      const text = searchBox.value.toLowerCase();
+    render(customers);
 
-      const filtered = allCustomers.filter(c =>
-        (c.name || "").toLowerCase().includes(text) ||
-        (c.email || "").toLowerCase().includes(text) ||
-        (c.phone || "").toLowerCase().includes(text)
+    document.getElementById("searchBox").addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase();
+      const filtered = customers.filter(c =>
+        c.name.toLowerCase().includes(q) ||
+        c.email.toLowerCase().includes(q) ||
+        c.phone.toLowerCase().includes(q)
       );
-
-      renderCustomers(filtered);
+      render(filtered);
     });
-
-    /* ===== VIEW ORDERS ===== */
-    window.viewOrders = (id) => {
-      window.location.href = `orders.html?user=${id}`;
-    };
-
-    loadCustomers();
   </script>
 
 </body>
 </html>
-
 
 
