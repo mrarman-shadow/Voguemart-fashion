@@ -3,51 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orders – VogueMart Admin</title>
+  <title>Orders – Admin – VogueMart</title>
 
   <link rel="stylesheet" href="style.css">
 
   <style>
     body {
       margin: 0;
-      background: #f4f7fc;
-      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
       display: flex;
+      font-family: "Poppins", sans-serif;
+      color: var(--text);
     }
 
-    /* SIDEBAR */
     .sidebar {
       width: 240px;
-      background: white;
+      background: #024558;
       height: 100vh;
       position: fixed;
       padding-top: 20px;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      box-shadow: 2px 0 12px rgba(0,0,0,0.4);
     }
 
     .sidebar h2 {
       text-align: center;
-      color: #0d6efd;
+      color: #f8d0a4;
+      margin-bottom: 25px;
       font-size: 24px;
-      margin-bottom: 20px;
+      font-weight: 700;
     }
 
     .sidebar a {
       display: block;
       padding: 14px 20px;
       text-decoration: none;
-      color: #333;
-      border-left: 4px solid transparent;
+      color: #f8d0a4;
+      font-size: 15px;
     }
 
     .sidebar a:hover,
     .sidebar a.active {
-      background: #e8f1ff;
-      border-left: 4px solid #0d6efd;
-      color: #0d6efd;
+      background: rgba(255,255,255,0.15);
+      border-left: 4px solid #f8d0a4;
     }
 
-    /* MAIN */
     .main {
       margin-left: 240px;
       width: calc(100% - 240px);
@@ -55,90 +54,80 @@
     }
 
     .topnav {
-      background: white;
-      padding: 15px 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      margin-bottom: 25px;
+      background: #013a46;
+      padding: 15px;
+      border-radius: 16px;
+      color: #f8d0a4;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 600;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .page-title {
-      font-size: 22px;
-      font-weight: 600;
-      color: #0d6efd;
+    .topnav input {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      font-size: 14px;
+      width: 230px;
     }
 
-    #searchBox {
-      padding: 12px;
-      width: 260px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    /* TABLE */
     .table-box {
-      background: white;
+      background: var(--card-bg);
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+      color: #024558;
     }
 
     table {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 16px;
       border-collapse: collapse;
     }
 
     th, td {
-      border-bottom: 1px solid #ddd;
-      padding: 14px;
+      padding: 12px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+      color: #024558;
     }
 
     th {
-      background: #f1f6ff;
-      color: #0d6efd;
+      background: #013a46;
+      color: #f8d0a4;
       font-weight: 600;
     }
 
     select {
-      padding: 6px;
-      border-radius: 6px;
-      border: 1px solid #aaa;
-    }
-
-    .btn-delete {
-      background: #dc3545;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 6px;
+      padding: 6px 8px;
+      border-radius: 999px;
       border: none;
-      cursor: pointer;
+      font-size: 13px;
     }
 
-    .btn-view {
-      background: #0d6efd;
-      color: white;
+    .btn-small {
       padding: 6px 12px;
-      border-radius: 6px;
+      border-radius: 999px;
       border: none;
+      background: #ff6b5a;
+      color: #fff;
       cursor: pointer;
-    }
-
-    @media(max-width: 600px) {
-      .sidebar { display: none; }
-      .main { margin-left: 0; width: 100%; }
+      font-size: 13px;
+      font-weight: 600;
     }
   </style>
+
+  <!-- ADMIN PROTECT -->
+  <script>
+    if (localStorage.getItem("adminLoggedIn") !== "true") {
+      window.location.href = "admin-login.html";
+    }
+  </script>
 </head>
-<script>
-  if (localStorage.getItem("adminLoggedIn") !== "true") {
-    // 🚫 Not logged in as admin → back to admin login
-    window.location.href = "admin-login.html";
-  }
-</script>
 
 <body>
 
@@ -150,16 +139,14 @@
     <a href="add-product.html">Add Product</a>
     <a href="customers.html">Customers</a>
     <a href="orders.html" class="active">Orders</a>
-    <a href="#" id="logoutBtn" style="color:red;margin-top:20px;">Logout</a>
+    <a href="#" id="logoutBtn" style="color:#ff7b7b">Logout</a>
   </div>
 
   <!-- MAIN -->
   <div class="main">
-
-    <!-- TOP NAV -->
     <div class="topnav">
-      <span class="page-title">Orders</span>
-      <input type="text" id="searchBox" placeholder="Search orders..." />
+      <span>Orders</span>
+      <input type="text" id="searchBox" placeholder="Search orders...">
     </div>
 
     <div class="table-box">
@@ -169,151 +156,96 @@
             <th>Order ID</th>
             <th>Customer</th>
             <th>Product</th>
-            <th>Date</th>
-            <th>Status</th>
             <th>Total (₹)</th>
-            <th colspan="2">Actions</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
           </tr>
         </thead>
-
-        <tbody id="ordersTableBody"></tbody>
+        <tbody id="ordersBody"></tbody>
       </table>
 
-      <p id="emptyMsg" style="text-align:center;color:#777;margin-top:15px;">No orders found</p>
+      <p id="ordersEmpty" style="text-align:center;margin-top:14px;">No orders found</p>
     </div>
-
   </div>
 
-
-  <!-- FIREBASE LOGIC -->
-  <script type="module">
-    import { db, app } from "./firebase-init.js";
-
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-    import {
-      collection,
-      getDocs,
-      updateDoc,
-      deleteDoc,
-      doc
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
-
-    const auth = getAuth(app);
-
-    /* ===== PROTECT PAGE ===== */
-    onAuthStateChanged(auth, (user) => {
-      if (!user || user.email !== "voguemart@gmail.com") {
-        window.location.href = "admin-login.html";
-      }
-    });
-
-    /* ===== LOGOUT ===== */
+  <!-- LOGOUT -->
+  <script>
     document.getElementById("logoutBtn").onclick = () => {
-      signOut(auth);
+      localStorage.removeItem("adminLoggedIn");
       window.location.href = "admin-login.html";
     };
+  </script>
 
-    /* ===== LOAD ORDERS ===== */
-    let allOrders = [];
+  <!-- DEMO DATA + FILTER + STATUS CHANGE -->
+  <script>
+    let orders = [
+      { id: "ORD01", customer: "Arun",  product: "Formal Shirt", total: 799,  status: "Paid",      date: "2025-02-01" },
+      { id: "ORD02", customer: "Priya", product: "Ladies Kurti", total: 999,  status: "Shipped",   date: "2025-02-03" },
+      { id: "ORD03", customer: "Ravi",  product: "Kids T-shirt", total: 399,  status: "Pending",   date: "2025-02-05" }
+    ];
 
-    async function loadOrders() {
-      const snap = await getDocs(collection(db, "orders"));
-      allOrders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      renderOrders(allOrders);
-    }
+    const body = document.getElementById("ordersBody");
+    const emptyEl = document.getElementById("ordersEmpty");
 
-    function renderOrders(list) {
-      const body = document.getElementById("ordersTableBody");
-      const emptyMsg = document.getElementById("emptyMsg");
-
+    function render(list) {
       body.innerHTML = "";
-
-      if (list.length === 0) {
-        emptyMsg.style.display = "block";
+      if (!list.length) {
+        emptyEl.style.display = "block";
         return;
       }
-
-      emptyMsg.style.display = "none";
+      emptyEl.style.display = "none";
 
       list.forEach(o => {
         body.innerHTML += `
           <tr>
             <td>${o.id}</td>
-            <td>${o.customer || "-"}</td>
-            <td>${o.product || "-"}</td>
-            <td>${o.date || "-"}</td>
-
+            <td>${o.customer}</td>
+            <td>${o.product}</td>
+            <td>₹${o.total}</td>
             <td>
-              <select onchange="updateStatus('${o.id}', this.value)">
+              <select onchange="changeStatus('${o.id}', this.value)">
                 <option ${o.status === "Pending" ? "selected" : ""}>Pending</option>
-                <option ${o.status === "Processing" ? "selected" : ""}>Processing</option>
+                <option ${o.status === "Paid" ? "selected" : ""}>Paid</option>
                 <option ${o.status === "Shipped" ? "selected" : ""}>Shipped</option>
                 <option ${o.status === "Delivered" ? "selected" : ""}>Delivered</option>
                 <option ${o.status === "Cancelled" ? "selected" : ""}>Cancelled</option>
               </select>
             </td>
-
-            <td>₹${o.total || 0}</td>
-
+            <td>${o.date}</td>
             <td>
-              <button class="btn-view" onclick="viewOrder('${o.id}')">View</button>
-            </td>
-
-            <td>
-              <button class="btn-delete" onclick="deleteOrder('${o.id}')">Delete</button>
+              <button class="btn-small" onclick="viewOrder('${o.id}')">View</button>
             </td>
           </tr>
         `;
       });
     }
 
-    /* ===== SEARCH ===== */
-    document.getElementById("searchBox").addEventListener("input", () => {
-      const q = searchBox.value.toLowerCase();
+    render(orders);
 
-      const filtered = allOrders.filter(o =>
+    document.getElementById("searchBox").addEventListener("input", e => {
+      const q = e.target.value.toLowerCase();
+      const filtered = orders.filter(o =>
         o.id.toLowerCase().includes(q) ||
-        (o.customer || "").toLowerCase().includes(q) ||
-        (o.status || "").toLowerCase().includes(q)
+        o.customer.toLowerCase().includes(q) ||
+        o.status.toLowerCase().includes(q)
       );
-
-      renderOrders(filtered);
+      render(filtered);
     });
 
-    /* ===== UPDATE STATUS ===== */
-    window.updateStatus = async (id, status) => {
-      await updateDoc(doc(db, "orders", id), { status });
+    window.changeStatus = function(id, status) {
+      const o = orders.find(x => x.id === id);
+      if (o) o.status = status;
       alert(`Order ${id} → ${status}`);
     };
 
-    /* ===== DELETE ORDER ===== */
-    window.deleteOrder = async (id) => {
-      if (!confirm(`Delete order ${id}?`)) return;
-      await deleteDoc(doc(db, "orders", id));
-      loadOrders();
-    };
-
-    /* ===== VIEW ORDER ===== */
-    window.viewOrder = (id) => {
-      const o = allOrders.find(x => x.id === id);
+    window.viewOrder = function(id) {
+      const o = orders.find(x => x.id === id);
       if (!o) return;
-
-      alert(`
-Order ID: ${id}
-Customer: ${o.customer}
-Product: ${o.product}
-Total: ₹${o.total}
-Status: ${o.status}
-Date: ${o.date}
-      `);
+      alert(
+        `Order ID: ${o.id}\nCustomer: ${o.customer}\nProduct: ${o.product}\nTotal: ₹${o.total}\nStatus: ${o.status}\nDate: ${o.date}`
+      );
     };
-
-    loadOrders();
   </script>
 
 </body>
