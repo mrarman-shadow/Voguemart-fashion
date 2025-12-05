@@ -5,152 +5,296 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VogueMart Admin</title>
 
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="Style.css" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #f4f7fc;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background: white;
+      height: 100vh;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding-top: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      color: #0d6efd;
+      margin-bottom: 25px;
+      font-size: 24px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 14px 20px;
+      color: #333;
+      text-decoration: none;
+      font-size: 16px;
+      border-left: 4px solid transparent;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: #e9f2ff;
+      border-left: 4px solid #0d6efd;
+      color: #0d6efd;
+    }
+
+    /* MAIN CONTENT */
+    .main {
+      margin-left: 240px;
+      padding: 25px;
+      width: calc(100% - 240px);
+    }
+
+    /* TOP NAV */
+    .topnav {
+      background: white;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+
+    #logoutAdmin {
+      padding: 10px 18px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    /* DASHBOARD CARDS */
+    .card-container {
+      display: flex;
+      gap: 20px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .dash-card {
+      background: white;
+      flex: 1;
+      min-width: 260px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .dash-card h3 {
+      color: #555;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .dash-card p {
+      font-size: 32px;
+      font-weight: 700;
+      color: #0d6efd;
+    }
+
+    /* TABLE */
+    .table-box {
+      background: white;
+      padding: 20px;
+      margin-top: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f6ff;
+      color: #0d6efd;
+      font-weight: 600;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { width: 200px; }
+      .main { margin-left: 200px; }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar { display: none; }
+      .main { width: 100%; margin-left: 0; }
+    }
+  </style>
 </head>
-<script>
-if (localStorage.getItem("adminLoggedIn") !== "true") {
-    window.location.href = "admin-login.html";
-}
-</script>
 
 <body>
 
   <!-- SIDEBAR -->
   <div class="sidebar">
     <h2>VogueMart</h2>
-    <ul>
-      <li class="active" onclick="showSection('dashboard')">Dashboard</li>
-      <li onclick="showSection('productsSection')">Products</li>
-      <li onclick="showSection('addProductSection')">Add Product</li>
-      <li onclick="showSection('customersSection')">Customers</li>
-      <li onclick="showSection('ordersSection')">Orders</li>
-     <li id="logoutBtn" onclick="logoutAdmin()">Logout</li>
-
-    </ul>
+    <a href="admin.html" class="active">Dashboard</a>
+    <a href="products.html">Products</a>
+    <a href="add-product.html">Add Product</a>
+    <a href="customers.html">Customers</a>
+    <a href="orders.html">Orders</a>
+    <a href="#" id="logoutAdmin" style="margin-top:20px;">Logout</a>
   </div>
 
-  <!-- MAIN PAGE -->
+  <!-- MAIN CONTENT -->
   <div class="main">
 
-    <!-- NAVBAR -->
-    <div class="navbar">Admin Dashboard</div>
+    <!-- TOP NAV -->
+    <div class="topnav">
+      <span class="admin-title">Admin Dashboard</span>
+      <button id="logoutAdminTop" style="background:#0d6efd;color:white;padding:10px 15px;border:none;border-radius:6px;">Logout</button>
+    </div>
 
-    <!-- DASHBOARD -->
-    <div id="dashboard" class="section">
-      <div class="dashboard-container">
-        <div class="card-grid">
+    <!-- DASHBOARD CARDS -->
+    <div class="card-container">
+      <div class="dash-card">
+        <h3>Total Users</h3>
+        <p id="totalUsers">0</p>
+      </div>
 
-          <div class="card">
-            <h3>Total Users</h3>
-            <p id="totalUsers">0</p>
-          </div>
+      <div class="dash-card">
+        <h3>Total Products</h3>
+        <p id="totalProducts">0</p>
+      </div>
 
-          <div class="card">
-            <h3>Total Orders</h3>
-            <p id="totalOrders">0</p>
-          </div>
-
-          <div class="card">
-            <h3>Total Products</h3>
-            <p id="totalProducts">0</p>
-          </div>
-
-        </div>
+      <div class="dash-card">
+        <h3>Total Orders</h3>
+        <p id="totalOrders">0</p>
       </div>
     </div>
 
-    <!-- ADD PRODUCT -->
-    <div id="addProductSection" class="section hidden">
-      <div class="form-container">
-        <h2>Add Product</h2>
+    <!-- RECENT ORDERS TABLE -->
+    <div class="table-box">
+      <h3 style="color:#0d6efd;">Recent Orders</h3>
 
-        <form id="productForm">
-          <div class="form-group">
-            <label>Product Name</label>
-            <input id="pName" type="text" required>
-          </div>
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Product</th>
+            <th>Total (₹)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
 
-          <div class="form-group">
-            <label>Price</label>
-            <input id="pPrice" type="number" required>
-          </div>
+        <tbody id="recentOrdersTable"></tbody>
+      </table>
 
-          <div class="form-group">
-            <label>Category</label>
-            <input id="pCategory" type="text" required>
-          </div>
-
-          <div class="form-group">
-            <label>Description</label>
-            <textarea id="pDesc" required></textarea>
-          </div>
-
-          <button type="submit" class="submit-btn">Add Product</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- PRODUCTS -->
-    <div id="productsSection" class="section hidden">
-      <div class="table-container">
-        <h2>Products List</h2>
-        <table id="productsTable">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- CUSTOMERS -->
-    <div id="customersSection" class="section hidden">
-      <div class="table-container">
-        <h2>Customers</h2>
-        <table id="customersTable">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Total Orders</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ORDERS -->
-    <div id="ordersSection" class="section hidden">
-      <div class="table-container">
-        <h2>Orders</h2>
-        <table id="ordersTable">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>User</th>
-              <th>Product</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th>Update</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+      <p class="empty" id="emptyOrders">No recent orders found</p>
     </div>
 
   </div>
 
-  <script src="admin.js"></script>
+  <!-- FIREBASE ADMIN LOGIC -->
+  <script type="module">
+    import { db, app } from "./firebase-init.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    import {
+      collection,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+    const auth = getAuth(app);
+
+    /* PROTECT PAGE */
+    onAuthStateChanged(auth, (user) => {
+      if (!user || user.email !== "voguemart@gmail.com") {
+        window.location.href = "admin-login.html";
+      }
+    });
+
+    /* LOGOUT BUTTONS */
+    const logoutAdmin = () => {
+      signOut(auth);
+      localStorage.removeItem("adminEmail");
+      window.location.href = "admin-login.html";
+    };
+
+    document.getElementById("logoutAdmin").onclick = logoutAdmin;
+    document.getElementById("logoutAdminTop").onclick = logoutAdmin;
+
+    /* LOAD COUNTS */
+    async function loadDashboard() {
+      const usersSnap = await getDocs(collection(db, "customers"));
+      const productsSnap = await getDocs(collection(db, "products"));
+      const ordersSnap = await getDocs(collection(db, "orders"));
+
+      document.getElementById("totalUsers").textContent = usersSnap.size;
+      document.getElementById("totalProducts").textContent = productsSnap.size;
+      document.getElementById("totalOrders").textContent = ordersSnap.size;
+
+      const ordersList = ordersSnap.docs.map((d) => d.data());
+
+      const recentTable = document.getElementById("recentOrdersTable");
+      const emptyMsg = document.getElementById("emptyOrders");
+
+      if (ordersList.length === 0) {
+        emptyMsg.style.display = "block";
+      } else {
+        emptyMsg.style.display = "none";
+      }
+
+      recentTable.innerHTML = "";
+
+      ordersList.slice(0, 5).forEach((o) => {
+        recentTable.innerHTML += `
+          <tr>
+            <td>${o.customer || "-"}</td>
+            <td>${o.product || "-"}</td>
+            <td>₹${o.total || 0}</td>
+            <td>${o.status || "-"}</td>
+          </tr>
+        `;
+      });
+    }
+
+    loadDashboard();
+  </script>
+
 </body>
 </html>
+
+
