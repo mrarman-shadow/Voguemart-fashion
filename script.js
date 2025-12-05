@@ -173,4 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+document.getElementById("menuBtn").onclick = () => {
+  document.getElementById("navMenu").classList.toggle("show-menu");
+};
+
 
