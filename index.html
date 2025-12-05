@@ -5,47 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VogueMart</title>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css" />
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- ICONS -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
 
-  <!-- ===== NAVBAR (Desktop + Mobile Menu Button) ===== -->
+  <!-- NAVBAR -->
   <nav class="navbar">
     <h1 class="brand">VogueMart</h1>
 
-    <ul class="nav-links">
+    <!-- MENU -->
+    <ul class="nav-links" id="navMenu">
       <li><a href="index.html">Home</a></li>
       <li><a href="shop.html">Shop</a></li>
       <li><a href="wishlist.html">Wishlist</a></li>
       <li><a href="account.html">Account</a></li>
       <li><a href="cart.html">Cart</a></li>
-      <li><a href="admin-login.html" style="color:red;">Admin</a></li>
+
+      <!-- ADMIN BUTTON ALWAYS VISIBLE -->
+      <li><a href="admin-login.html" style="color:red; font-weight:600;">Admin</a></li>
+
+      <!-- LOGOUT BUTTON -->
       <button id="logoutBtn" class="logout">Logout</button>
     </ul>
 
-    <!-- Mobile menu toggle button -->
-    <button id="menuToggle" class="menu-btn">☰</button>
+    <!-- MOBILE MENU BUTTON -->
+    <button id="menuBtn" class="menu-btn">☰</button>
 
-    <!-- Dark mode -->
+    <!-- Dark Mode -->
     <button id="themeToggle" class="theme-btn">🌙</button>
   </nav>
 
-  <!-- ===== MOBILE SIDEBAR (Old Working Menu) ===== -->
-  <div id="mobileMenu" class="mobile-menu">
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="wishlist.html">Wishlist</a>
-    <a href="account.html">Account</a>
-    <a href="cart.html">Cart</a>
-    <a href="admin-login.html" style="color:red;">Admin</a>
-    <button id="logoutBtnMob" class="logout">Logout</button>
-  </div>
+  <script>
+    // MOBILE MENU OPEN/CLOSE
+    document.getElementById("menuBtn").onclick = () => {
+      document.getElementById("navMenu").classList.toggle("show-menu");
+    };
+  </script>
 
-  <!-- ===== SEARCH HERO ===== -->
+  <!-- SEARCH BAR -->
   <section class="vm-search-hero vm-search-hero--home">
     <div class="vm-search-bar">
       <i class="fa-solid fa-magnifying-glass vm-search-icon"></i>
@@ -80,7 +83,7 @@
   <section class="banner">
     <img
       src="https://www.hemswell-antiques.com/images/uploads/blog_images/c48297806d52d413ff70520b143a92492dd3c02b_bEu7.jpeg"
-      alt="VogueMart Banner"
+      alt="Banner"
     />
   </section>
 
@@ -88,26 +91,37 @@
   <h2 class="suggestion-title">Customers, Suggestions For You</h2>
 
   <section id="products" class="products">
+
+    <!-- PRODUCT 1 -->
     <div class="product-card">
       <img src="https://assets.myntassets.com/h_1440,q_75,w_1080/v1/assets/images/10686028/2024/6/21/335e6cb9-a51c-4f50-9b23-90775899276a1718972512096-DENNISON-Men-Teal-Blue-Classic-Regular-Fit-Solid-Formal-Shir-1.jpg">
       <h3>Classic Cotton Shirt</h3>
       <p class="price">₹999</p>
-      <button onclick="addToCart('Classic Cotton Shirt', 999)">Add to Cart</button>
+      <button onclick="addToCart('Classic Cotton Shirt', 999,'https://assets.myntassets.com/h_1440,q_75,w_1080/v1/assets/images/10686028/2024/6/21/335e6cb9-a51c-4f50-9b23-90775899276a1718972512096-DENNISON-Men-Teal-Blue-Classic-Regular-Fit-Solid-Formal-Shir-1.jpg')">
+        Add to Cart
+      </button>
     </div>
 
+    <!-- PRODUCT 2 -->
     <div class="product-card">
-      <img src="https://i5.walmartimages.com/seo/Poedagar-Top-Brand-Luxury-Men-Watch.jpeg">
+      <img src="https://i5.walmartimages.com/seo/Poedagar-Top-Brand-Luxury-Men-Watch-Waterproof-Luminous-Stainless-Steel-Watches-Sport-Quartz-Clock-Mens-Date-Business-Wristwatch-Quartz-Wristwatches_9e8f9e27-a565-433d-a631-0217e7658626.5a77011a5e9db0be8848f49f56f7ce28.jpeg">
       <h3>Luxury Wrist Watch</h3>
       <p class="price">₹1799</p>
-      <button onclick="addToCart('Luxury Wrist Watch', 1799)">Add to Cart</button>
+      <button onclick="addToCart('Luxury Wrist Watch', 1799,'https://i5.walmartimages.com/seo/Poedagar-Top-Brand-Luxury-Men-Watch-Waterproof-Luminous-Stainless-Steel-Watches-Sport-Quartz-Clock-Mens-Date-Business-Wristwatch-Quartz-Wristwatches_9e8f9e27-a565-433d-a631-0217e7658626.5a77011a5e9db0be8848f49f56f7ce28.jpeg')">
+        Add to Cart
+      </button>
     </div>
 
+    <!-- PRODUCT 3 -->
     <div class="product-card">
-      <img src="https://5.imimg.com/data5/...premium-shoes.png">
+      <img src="https://5.imimg.com/data5/SELLER/Default/2024/12/469703376/TD/OD/CO/191798954/dual-colour-vegan-striped-premium-shoes-for-men-500x500.png">
       <h3>Premium Sneakers</h3>
       <p class="price">₹2599</p>
-      <button onclick="addToCart('Premium Sneakers', 2599)">Add to Cart</button>
+      <button onclick="addToCart('Premium Sneakers', 2599,'https://5.imimg.com/data5/SELLER/Default/2024/12/469703376/TD/OD/CO/191798954/dual-colour-vegan-striped-premium-shoes-for-men-500x500.png')">
+        Add to Cart
+      </button>
     </div>
+
   </section>
 
   <!-- BOTTOM NAV -->
@@ -120,26 +134,14 @@
   </div>
 
   <!-- FOOTER -->
-  <footer><p>© 2025 VogueMart | All Rights Reserved</p></footer>
+  <footer>
+    <p>© 2025 VogueMart | All Rights Reserved</p>
+  </footer>
 
-  <!-- ===== SCRIPTS ===== -->
+  <!-- SCRIPT -->
+  <script src="script.js"></script>
 
-  <script>
-    // Sidebar open/close
-    const menuBtn = document.getElementById("menuToggle");
-    const mobileMenu = document.getElementById("mobileMenu");
-
-    menuBtn.addEventListener("click", () => {
-      mobileMenu.classList.toggle("open");
-    });
-
-    // Hero shop button
-    document.getElementById("heroShop").onclick = () => {
-      window.location.href = "shop.html";
-    };
-  </script>
-
-  <!-- Firebase Auth (Logout) -->
+  <!-- FIREBASE LOGIN/LOGOUT -->
   <script type="module">
     import { app } from "./firebase-init.js";
     import {
@@ -150,21 +152,25 @@
 
     const auth = getAuth(app);
     const logoutBtn = document.getElementById("logoutBtn");
-    const logoutBtnMob = document.getElementById("logoutBtnMob");
 
-    function logoutAll() {
+    // SHOW LOGOUT ONLY WHEN LOGGED-IN
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        logoutBtn.style.display = "inline-block";
+      } else {
+        logoutBtn.style.display = "none";
+      }
+    });
+
+    // LOGOUT
+    logoutBtn.onclick = () => {
       signOut(auth).then(() => {
         alert("Logged out successfully!");
         window.location.href = "login.html";
       });
-    }
+    };
 
-    if (logoutBtn) logoutBtn.onclick = logoutAll;
-    if (logoutBtnMob) logoutBtnMob.onclick = logoutAll;
   </script>
-
-  <!-- Main script -->
-  <script src="script.js"></script>
 
 </body>
 </html>
