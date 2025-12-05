@@ -1,119 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VogueMart Admin Login</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - VogueMart</title>
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    body {
-      background: #f2f6fc;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .admin-login-container {
-      max-width: 400px;
-      margin: 80px auto;
-      background: white;
-      padding: 35px;
-      border-radius: 12px;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .admin-login-container h2 {
-      color: #0d6efd;
-      margin-bottom: 25px;
-      font-size: 28px;
-      font-weight: 600;
-    }
-
-    .admin-login-container input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    .admin-login-container button {
-      width: 100%;
-      background: #0d6efd;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 17px;
-      margin-top: 10px;
-    }
-
-    #adminError {
-      margin-top: 10px;
-      color: red;
-      font-weight: 500;
-    }
-  </style>
 </head>
-
 <body>
 
-  <div class="admin-login-container">
+  <div class="navbar">
+    <div class="brand">VogueMart Admin</div>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </div>
+
+  <section class="login-section">
     <h2>Admin Login</h2>
 
     <form id="adminLoginForm">
-      <input type="email" id="adminEmail" placeholder="Admin Email" required />
-      <input type="password" id="adminPassword" placeholder="Password" required />
+      <input type="email" id="adminEmail" placeholder="Admin Email" required>
+      <input type="password" id="adminPassword" placeholder="Password" required>
       <button type="submit">Login</button>
     </form>
 
-    <p id="adminError"></p>
-  </div>
+    <p id="adminError" style="color:red; margin-top:10px; text-align:center;"></p>
+  </section>
 
-  <!-- Firebase Admin Login -->
   <script type="module">
-    import { app } from "./firebase-init.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    const ADMIN_EMAIL = "voguemart@gmail.com";
+    const ADMIN_PASSWORD = "vogueadmin123";
 
-    const auth = getAuth(app);
-    const ADMIN_EMAIL = "voguemart@gmail.com";      // <-- your admin email
-    const ADMIN_PASS = "vogueadmin123";             // <-- your admin pass
-
-    document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+    document.getElementById("adminLoginForm").addEventListener("submit", (e) => {
       e.preventDefault();
 
       const email = document.getElementById("adminEmail").value.trim();
-      const password = document.getElementById("adminPassword").value;
-      const errorBox = document.getElementById("adminError");
+      const password = document.getElementById("adminPassword").value.trim();
+      const error = document.getElementById("adminError");
 
-      errorBox.textContent = "";
-
-      // Check email/password manually first
-      if (email !== ADMIN_EMAIL || password !== ADMIN_PASS) {
-        errorBox.textContent = "Invalid admin credentials!";
-        return;
-      }
-
-      // Try login through Firebase (safe)
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-
-        localStorage.setItem("adminEmail", email);
-
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        localStorage.setItem("adminLoggedIn", "true");
         window.location.href = "admin.html";
-
-      } catch (err) {
-        errorBox.textContent = "Firebase rejected login!";
+      } else {
+        error.textContent = "Invalid admin credentials!";
       }
     });
   </script>
 
+  <script src="script.js"></script>
 </body>
 </html>
+
+
 
