@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VogueMart - Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - VogueMart</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <h1 class="brand">VogueMart</h1>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#products">Shop</a></li>
-      <li><a href="cart.html">Cart</a></li>
-      <li><a href="#" class="btn" id="login-btn">Login</a></li>
-      <a href="register.html">Create Account</a>
-<li><a href="login.html">Account</a></li>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="brand">VogueMart</div>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </div>
 
-    </ul>
-  </nav>
-
-  <!-- Login Section -->
+  <!-- LOGIN BOX -->
   <section class="login-section">
-    <h2>Login to VogueMart</h2>
+    <h2>Login</h2>
+
     <form id="login-form">
-      <input type="email" id="email" placeholder="Enter your email" required>
-      <input type="password" id="password" placeholder="Enter your password" required>
-      <button type="submit" id="login-btn-form">Login</button>
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+
+      <button type="submit">Login</button>
     </form>
-    <p id="login-error" style="color:red;"></p>
+
+    <p>Don't have an account? <a href="register.html">Register</a></p>
+
+    <p id="login-error" style="color:red; margin-top:10px; text-align:center;"></p>
   </section>
 
-  <!-- Footer -->
-  <footer><p>© 2025 VogueMart | All Rights Reserved</p></footer>
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="wishlist.html">Wishlist</a>
+    <a href="cart.html">Cart</a>
+  </div>
 
-  <!-- Firebase Login Script -->
-  <script type="module" src="login.js"></script>
-
+  <script src="firebase-init.js" type="module"></script>
+  <script src="script.js"></script>
 </body>
 </html>
+
