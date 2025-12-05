@@ -7,133 +7,30 @@
 
   <link rel="stylesheet" href="style.css">
 
-  <style>
-    body {
-      margin: 0;
-      background: var(--bg);
-      display: flex;
-      font-family: "Poppins", sans-serif;
-      color: var(--text);
-    }
-
-    .sidebar {
-      width: 240px;
-      background: #024558;
-      height: 100vh;
-      position: fixed;
-      padding-top: 20px;
-      box-shadow: 2px 0 12px rgba(0,0,0,0.4);
-    }
-
-    .sidebar h2 {
-      text-align: center;
-      color: #f8d0a4;
-      margin-bottom: 25px;
-      font-size: 24px;
-      font-weight: 700;
-    }
-
-    .sidebar a {
-      display: block;
-      padding: 14px 20px;
-      text-decoration: none;
-      color: #f8d0a4;
-      font-size: 15px;
-    }
-
-    .sidebar a:hover,
-    .sidebar a.active {
-      background: rgba(255,255,255,0.15);
-      border-left: 4px solid #f8d0a4;
-    }
-
-    .main {
-      margin-left: 240px;
-      width: calc(100% - 240px);
-      padding: 25px;
-    }
-
-    .topnav {
-      background: #013a46;
-      padding: 15px;
-      border-radius: 16px;
-      color: #f8d0a4;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
-      margin-bottom: 20px;
-      font-size: 22px;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .topnav input {
-      border-radius: 999px;
-      border: none;
-      padding: 8px 14px;
-      font-size: 14px;
-      width: 230px;
-    }
-
-    .table-box {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 18px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
-      color: #024558;
-    }
-
-    table {
-      width: 100%;
-      margin-top: 16px;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #ccc;
-      text-align: left;
-      color: #024558;
-    }
-
-    th {
-      background: #013a46;
-      color: #f8d0a4;
-      font-weight: 600;
-    }
-
-    select {
-      padding: 6px 8px;
-      border-radius: 999px;
-      border: none;
-      font-size: 13px;
-    }
-
-    .btn-small {
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: none;
-      background: #ff6b5a;
-      color: #fff;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-    }
-  </style>
-
-  <!-- ADMIN PROTECT -->
   <script>
     if (localStorage.getItem("adminLoggedIn") !== "true") {
       window.location.href = "admin-login.html";
     }
   </script>
+
+  <style>
+    body { margin: 0; display: flex; background: var(--bg); font-family: "Poppins"; }
+    .sidebar { width: 240px; background:#024558; color:#fff; height:100vh; position:fixed; padding-top:20px; }
+    .sidebar a { display:block; padding:14px; text-decoration:none; color:#f8d0a4; }
+    .sidebar a.active { background:rgba(255,255,255,0.15); border-left:4px solid #f8d0a4; }
+    .main { margin-left:240px; width:calc(100% - 240px); padding:25px; }
+    .table-box { background: var(--card-bg); padding: 20px; border-radius: 12px; }
+    table { width:100%; border-collapse: collapse; margin-top:20px; }
+    th, td { padding:12px; border-bottom:1px solid #ddd; }
+    th { background:#013a46; color:#f8d0a4; }
+  </style>
 </head>
 
 <body>
 
   <!-- SIDEBAR -->
   <div class="sidebar">
-    <h2>VogueMart</h2>
+    <h2 style="text-align:center;color:#f8d0a4;">VogueMart</h2>
     <a href="admin.html">Dashboard</a>
     <a href="products.html">Products</a>
     <a href="add-product.html">Add Product</a>
@@ -144,10 +41,7 @@
 
   <!-- MAIN -->
   <div class="main">
-    <div class="topnav">
-      <span>Orders</span>
-      <input type="text" id="searchBox" placeholder="Search orders...">
-    </div>
+    <h2 style="color:#024558;">Orders</h2>
 
     <div class="table-box">
       <table>
@@ -156,20 +50,19 @@
             <th>Order ID</th>
             <th>Customer</th>
             <th>Product</th>
-            <th>Total (₹)</th>
+            <th>Total</th>
             <th>Status</th>
             <th>Date</th>
-            <th>Action</th>
           </tr>
         </thead>
+
         <tbody id="ordersBody"></tbody>
       </table>
 
-      <p id="ordersEmpty" style="text-align:center;margin-top:14px;">No orders found</p>
+      <p id="emptyMsg" style="text-align:center;margin-top:10px;">No orders found</p>
     </div>
   </div>
 
-  <!-- LOGOUT -->
   <script>
     document.getElementById("logoutBtn").onclick = () => {
       localStorage.removeItem("adminLoggedIn");
@@ -177,75 +70,38 @@
     };
   </script>
 
-  <!-- DEMO DATA + FILTER + STATUS CHANGE -->
-  <script>
-    let orders = [
-      { id: "ORD01", customer: "Arun",  product: "Formal Shirt", total: 799,  status: "Paid",      date: "2025-02-01" },
-      { id: "ORD02", customer: "Priya", product: "Ladies Kurti", total: 999,  status: "Shipped",   date: "2025-02-03" },
-      { id: "ORD03", customer: "Ravi",  product: "Kids T-shirt", total: 399,  status: "Pending",   date: "2025-02-05" }
-    ];
+  <!-- FIREBASE ORDERS -->
+  <script type="module">
+    import { db } from "./firebase-init.js";
+    import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
     const body = document.getElementById("ordersBody");
-    const emptyEl = document.getElementById("ordersEmpty");
+    const emptyMsg = document.getElementById("emptyMsg");
 
-    function render(list) {
+    async function loadOrders() {
+      const snap = await getDocs(collection(db, "orders"));
+      const orders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      if (orders.length === 0) return;
+
+      emptyMsg.style.display = "none";
       body.innerHTML = "";
-      if (!list.length) {
-        emptyEl.style.display = "block";
-        return;
-      }
-      emptyEl.style.display = "none";
 
-      list.forEach(o => {
+      orders.forEach(o => {
         body.innerHTML += `
           <tr>
             <td>${o.id}</td>
-            <td>${o.customer}</td>
-            <td>${o.product}</td>
-            <td>₹${o.total}</td>
-            <td>
-              <select onchange="changeStatus('${o.id}', this.value)">
-                <option ${o.status === "Pending" ? "selected" : ""}>Pending</option>
-                <option ${o.status === "Paid" ? "selected" : ""}>Paid</option>
-                <option ${o.status === "Shipped" ? "selected" : ""}>Shipped</option>
-                <option ${o.status === "Delivered" ? "selected" : ""}>Delivered</option>
-                <option ${o.status === "Cancelled" ? "selected" : ""}>Cancelled</option>
-              </select>
-            </td>
-            <td>${o.date}</td>
-            <td>
-              <button class="btn-small" onclick="viewOrder('${o.id}')">View</button>
-            </td>
+            <td>${o.customer || '-'}</td>
+            <td>${o.product || '-'}</td>
+            <td>₹${o.total || 0}</td>
+            <td>${o.status || 'Pending'}</td>
+            <td>${o.date || '-'}</td>
           </tr>
         `;
       });
     }
 
-    render(orders);
-
-    document.getElementById("searchBox").addEventListener("input", e => {
-      const q = e.target.value.toLowerCase();
-      const filtered = orders.filter(o =>
-        o.id.toLowerCase().includes(q) ||
-        o.customer.toLowerCase().includes(q) ||
-        o.status.toLowerCase().includes(q)
-      );
-      render(filtered);
-    });
-
-    window.changeStatus = function(id, status) {
-      const o = orders.find(x => x.id === id);
-      if (o) o.status = status;
-      alert(`Order ${id} → ${status}`);
-    };
-
-    window.viewOrder = function(id) {
-      const o = orders.find(x => x.id === id);
-      if (!o) return;
-      alert(
-        `Order ID: ${o.id}\nCustomer: ${o.customer}\nProduct: ${o.product}\nTotal: ₹${o.total}\nStatus: ${o.status}\nDate: ${o.date}`
-      );
-    };
+    loadOrders();
   </script>
 
 </body>
