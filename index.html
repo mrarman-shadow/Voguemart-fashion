@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VogueMart</title>
 
-  <!-- MAIN CSS -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- ICONS -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
@@ -19,45 +16,33 @@
   <nav class="navbar">
     <h1 class="brand">VogueMart</h1>
 
-    <!-- MENU -->
+    <!-- Menu Button (Mobile) -->
+    <button id="menuBtn" class="menu-btn">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Menu Items -->
     <ul class="nav-links" id="navMenu">
       <li><a href="index.html">Home</a></li>
       <li><a href="shop.html">Shop</a></li>
       <li><a href="wishlist.html">Wishlist</a></li>
       <li><a href="account.html">Account</a></li>
       <li><a href="cart.html">Cart</a></li>
+      <li><a href="admin-login.html" style="color:red">Admin</a></li>
 
-      <!-- ADMIN BUTTON ALWAYS VISIBLE -->
-      <li><a href="admin-login.html" style="color:red; font-weight:600;">Admin</a></li>
-
-      <!-- LOGOUT BUTTON -->
       <button id="logoutBtn" class="logout">Logout</button>
     </ul>
 
-    <!-- MOBILE MENU BUTTON -->
-    <button id="menuBtn" class="menu-btn">☰</button>
-
-    <!-- Dark Mode -->
+    <!-- Theme toggle -->
     <button id="themeToggle" class="theme-btn">🌙</button>
   </nav>
 
-  <script>
-    // MOBILE MENU OPEN/CLOSE
-    document.getElementById("menuBtn").onclick = () => {
-      document.getElementById("navMenu").classList.toggle("show-menu");
-    };
-  </script>
-
-  <!-- SEARCH BAR -->
+  <!-- SEARCH HERO -->
   <section class="vm-search-hero vm-search-hero--home">
     <div class="vm-search-bar">
       <i class="fa-solid fa-magnifying-glass vm-search-icon"></i>
-      <input
-        type="text"
-        id="search-bar"
-        class="vm-search-input"
-        placeholder="Search for shirts, sneakers, watches..."
-      />
+      <input type="text" id="search-bar" class="vm-search-input"
+             placeholder="Search for shirts, sneakers, watches..." />
     </div>
 
     <p class="vm-location-text">
@@ -72,7 +57,7 @@
     </div>
   </section>
 
-  <!-- HERO SECTION -->
+  <!-- HERO -->
   <section class="hero">
     <h1>Welcome to VogueMart</h1>
     <p>Discover the latest fashion trends with premium quality</p>
@@ -81,97 +66,69 @@
 
   <!-- BANNER -->
   <section class="banner">
-    <img
-      src="https://www.hemswell-antiques.com/images/uploads/blog_images/c48297806d52d413ff70520b143a92492dd3c02b_bEu7.jpeg"
-      alt="Banner"
-    />
+    <img src="https://www.hemswell-antiques.com/images/uploads/blog_images/c48297806d52d413ff70520b143a92492dd3c02b_bEu7.jpeg">
   </section>
 
-  <!-- FEATURED PRODUCTS -->
+  <!-- SUGGESTION PRODUCTS -->
   <h2 class="suggestion-title">Customers, Suggestions For You</h2>
 
   <section id="products" class="products">
 
-    <!-- PRODUCT 1 -->
     <div class="product-card">
       <img src="https://assets.myntassets.com/h_1440,q_75,w_1080/v1/assets/images/10686028/2024/6/21/335e6cb9-a51c-4f50-9b23-90775899276a1718972512096-DENNISON-Men-Teal-Blue-Classic-Regular-Fit-Solid-Formal-Shir-1.jpg">
       <h3>Classic Cotton Shirt</h3>
       <p class="price">₹999</p>
-      <button onclick="addToCart('Classic Cotton Shirt', 999,'https://assets.myntassets.com/h_1440,q_75,w_1080/v1/assets/images/10686028/2024/6/21/335e6cb9-a51c-4f50-9b23-90775899276a1718972512096-DENNISON-Men-Teal-Blue-Classic-Regular-Fit-Solid-Formal-Shir-1.jpg')">
+      <button onclick="addToCart('Classic Cotton Shirt', 999, 'img.jpg')">
         Add to Cart
       </button>
     </div>
 
-    <!-- PRODUCT 2 -->
     <div class="product-card">
       <img src="https://i5.walmartimages.com/seo/Poedagar-Top-Brand-Luxury-Men-Watch-Waterproof-Luminous-Stainless-Steel-Watches-Sport-Quartz-Clock-Mens-Date-Business-Wristwatch-Quartz-Wristwatches_9e8f9e27-a565-433d-a631-0217e7658626.5a77011a5e9db0be8848f49f56f7ce28.jpeg">
       <h3>Luxury Wrist Watch</h3>
       <p class="price">₹1799</p>
-      <button onclick="addToCart('Luxury Wrist Watch', 1799,'https://i5.walmartimages.com/seo/Poedagar-Top-Brand-Luxury-Men-Watch-Waterproof-Luminous-Stainless-Steel-Watches-Sport-Quartz-Clock-Mens-Date-Business-Wristwatch-Quartz-Wristwatches_9e8f9e27-a565-433d-a631-0217e7658626.5a77011a5e9db0be8848f49f56f7ce28.jpeg')">
+      <button onclick="addToCart('Luxury Wrist Watch', 1799, 'img.jpg')">
         Add to Cart
       </button>
     </div>
 
-    <!-- PRODUCT 3 -->
     <div class="product-card">
       <img src="https://5.imimg.com/data5/SELLER/Default/2024/12/469703376/TD/OD/CO/191798954/dual-colour-vegan-striped-premium-shoes-for-men-500x500.png">
       <h3>Premium Sneakers</h3>
       <p class="price">₹2599</p>
-      <button onclick="addToCart('Premium Sneakers', 2599,'https://5.imimg.com/data5/SELLER/Default/2024/12/469703376/TD/OD/CO/191798954/dual-colour-vegan-striped-premium-shoes-for-men-500x500.png')">
+      <button onclick="addToCart('Premium Sneakers', 2599, 'img.jpg')">
         Add to Cart
       </button>
     </div>
 
   </section>
 
-  <!-- BOTTOM NAV -->
+  <!-- MOBILE BOTTOM NAV -->
   <div class="bottom-nav">
     <a href="index.html">🏠 Home</a>
     <a href="shop.html">🛍 Shop</a>
     <a href="wishlist.html">❤️ Wishlist</a>
-    <a href="login.html">👤 Account</a>
+    <a href="account.html">👤 Account</a>
     <a href="cart.html">🛒 Cart</a>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <p>© 2025 VogueMart | All Rights Reserved</p>
   </footer>
 
-  <!-- SCRIPT -->
-  <script src="script.js"></script>
+  <!-- Mobile Menu Toggle JS -->
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const navMenu = document.getElementById("navMenu");
 
-  <!-- FIREBASE LOGIN/LOGOUT -->
-  <script type="module">
-    import { app } from "./firebase-init.js";
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-    const auth = getAuth(app);
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    // SHOW LOGOUT ONLY WHEN LOGGED-IN
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        logoutBtn.style.display = "inline-block";
-      } else {
-        logoutBtn.style.display = "none";
-      }
+    menuBtn.addEventListener("click", () => {
+      navMenu.classList.toggle("show-menu");
     });
-
-    // LOGOUT
-    logoutBtn.onclick = () => {
-      signOut(auth).then(() => {
-        alert("Logged out successfully!");
-        window.location.href = "login.html";
-      });
-    };
-
   </script>
+
+  <script src="script.js"></script>
 
 </body>
 </html>
+
 
