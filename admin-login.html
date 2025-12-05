@@ -1,51 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login - VogueMart</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VogueMart Admin Login</title>
 
-  <div class="navbar">
-    <div class="brand">VogueMart Admin</div>
-    <button id="themeToggle" class="theme-btn">🌙</button>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background-color: #003945; /* teal */
+      color: #f8d0a4;
+    }
+
+    .admin-login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .admin-login-card {
+      background: #024558;
+      padding: 32px 28px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+
+    .admin-login-card h1 {
+      margin-bottom: 24px;
+      font-size: 26px;
+      color: #f8d0a4;
+    }
+
+    .admin-login-card input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+    }
+
+    .admin-login-card button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 999px;
+      border: none;
+      background: #ff6b5a;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    #adminError {
+      margin-top: 10px;
+      color: #ff9b9b;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="admin-login-wrapper">
+    <div class="admin-login-card">
+      <h1>Admin Login</h1>
+
+      <form id="adminLoginForm">
+        <input type="email" id="adminEmail" placeholder="Admin Email" required />
+        <input type="password" id="adminPassword" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+
+      <p id="adminError"></p>
+    </div>
   </div>
 
-  <section class="login-section">
-    <h2>Admin Login</h2>
-
-    <form id="adminLoginForm">
-      <input type="email" id="adminEmail" placeholder="Admin Email" required>
-      <input type="password" id="adminPassword" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-
-    <p id="adminError" style="color:red; margin-top:10px; text-align:center;"></p>
-  </section>
-
-  <script type="module">
+  <!-- Simple LOCAL admin login -->
+  <script>
     const ADMIN_EMAIL = "voguemart@gmail.com";
-    const ADMIN_PASSWORD = "vogueadmin123";
+    const ADMIN_PASS  = "vogueadmin123";
 
     document.getElementById("adminLoginForm").addEventListener("submit", (e) => {
       e.preventDefault();
 
       const email = document.getElementById("adminEmail").value.trim();
-      const password = document.getElementById("adminPassword").value.trim();
-      const error = document.getElementById("adminError");
+      const pass  = document.getElementById("adminPassword").value.trim();
+      const errEl = document.getElementById("adminError");
 
-      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      errEl.textContent = "";
+
+      if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+        // ✅ mark admin as logged in
         localStorage.setItem("adminLoggedIn", "true");
+        localStorage.setItem("adminEmail", email); // optional
+
         window.location.href = "admin.html";
       } else {
-        error.textContent = "Invalid admin credentials!";
+        errEl.textContent = "Invalid admin credentials!";
       }
     });
   </script>
-
-  <script src="script.js"></script>
 </body>
 </html>
 
