@@ -6,6 +6,7 @@
   <title>Admin Dashboard – VogueMart</title>
 
   <link rel="stylesheet" href="style.css">
+<body class="admin-body">
 
   <style>
     body {
@@ -130,6 +131,25 @@
       .sidebar { display: none; }
       .main { margin-left: 0; width: 100%; }
     }
+    .admin-body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.admin-card,
+.admin-table-box,
+.admin-sidebar {
+  background: var(--card-bg);
+  color: #024558;
+}
+
+/* sidebar links */
+.admin-sidebar a {
+  color: #fff;
+}
+.admin-sidebar a.active {
+  background: rgba(0,0,0,0.2);
+}
   </style>
 </head>
 <script>
@@ -280,6 +300,7 @@
 
 </body>
 </html>
+
 
 
 
