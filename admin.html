@@ -6,46 +6,46 @@
   <title>Admin Dashboard – VogueMart</title>
 
   <link rel="stylesheet" href="style.css">
-<body class="admin-body">
 
   <style>
     body {
       margin: 0;
-      background: #f4f7fc;
+      background: var(--bg);
       font-family: 'Poppins', sans-serif;
       display: flex;
+      color: var(--text);
     }
 
     /* SIDEBAR */
     .sidebar {
       width: 240px;
-      background: white;
+      background: #024558;
       height: 100vh;
       position: fixed;
       padding-top: 20px;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      box-shadow: 2px 0 12px rgba(0,0,0,0.4);
     }
 
     .sidebar h2 {
       text-align: center;
-      color: #0d6efd;
+      color: #f8d0a4;
       font-size: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      font-weight: 700;
     }
 
     .sidebar a {
       display: block;
       padding: 14px 20px;
       text-decoration: none;
-      color: #333;
-      border-left: 4px solid transparent;
+      color: #f8d0a4;
+      font-size: 15px;
     }
 
     .sidebar a:hover,
     .sidebar a.active {
-      background: #e8f1ff;
-      border-left: 4px solid #0d6efd;
-      color: #0d6efd;
+      background: rgba(255,255,255,0.15);
+      border-left: 4px solid #f8d0a4;
     }
 
     /* MAIN */
@@ -56,10 +56,10 @@
     }
 
     .topnav {
-      background: white;
+      background: #013a46;
       padding: 15px 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
       margin-bottom: 25px;
       display: flex;
       justify-content: space-between;
@@ -69,7 +69,7 @@
     .page-title {
       font-size: 22px;
       font-weight: 600;
-      color: #0d6efd;
+      color: #f8d0a4;
     }
 
     /* CARDS */
@@ -83,81 +83,63 @@
     .card {
       flex: 1;
       min-width: 220px;
-      background: white;
+      background: var(--card-bg);
       padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
       text-align: center;
     }
 
     .card h3 {
-      color: #0d6efd;
+      color: #013a46;
       margin-bottom: 10px;
       font-size: 20px;
+      font-weight: 700;
     }
 
     .card p {
       font-size: 28px;
       font-weight: bold;
-      color: #333;
+      color: #024558;
     }
 
-    /* RECENT ORDERS TABLE */
+    /* TABLE BOX */
     .table-box {
-      background: white;
+      background: var(--card-bg);
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+      color: #024558;
     }
 
     table {
       width: 100%;
       margin-top: 20px;
       border-collapse: collapse;
-    }
-
-    th, td {
-      border-bottom: 1px solid #ddd;
-      padding: 14px;
-    }
-
-    th {
-      background: #f1f6ff;
-      color: #0d6efd;
+      color: #024558;
       font-weight: 600;
     }
 
-    @media(max-width: 600px) {
-      .sidebar { display: none; }
-      .main { margin-left: 0; width: 100%; }
+    th, td {
+      border-bottom: 1px solid #ccc;
+      padding: 14px;
+      text-align: left;
     }
-    .admin-body {
-  background: var(--bg);
-  color: var(--text);
-}
 
-.admin-card,
-.admin-table-box,
-.admin-sidebar {
-  background: var(--card-bg);
-  color: #024558;
-}
+    th {
+      background: #013a46;
+      color: #f8d0a4;
+    }
 
-/* sidebar links */
-.admin-sidebar a {
-  color: #fff;
-}
-.admin-sidebar a.active {
-  background: rgba(0,0,0,0.2);
-}
   </style>
+
+  <!-- ADMIN PROTECTION -->
+  <script>
+    if (localStorage.getItem("adminLoggedIn") !== "true") {
+      window.location.href = "admin-login.html";
+    }
+  </script>
 </head>
-<script>
-  if (localStorage.getItem("adminLoggedIn") !== "true") {
-    // 🚫 Not logged in as admin → back to admin login
-    window.location.href = "admin-login.html";
-  }
-</script>
 
 <body>
 
@@ -169,13 +151,12 @@
     <a href="add-product.html">Add Product</a>
     <a href="customers.html">Customers</a>
     <a href="orders.html">Orders</a>
-    <a href="#" id="logoutBtn" style="color:red;margin-top:20px;">Logout</a>
+    <a href="#" id="logoutBtn" style="color:#ff7b7b">Logout</a>
   </div>
 
   <!-- MAIN -->
   <div class="main">
-
-    <!-- TOP NAV -->
+    
     <div class="topnav">
       <span class="page-title">Admin Dashboard</span>
     </div>
@@ -200,8 +181,7 @@
 
     <!-- RECENT ORDERS -->
     <div class="table-box">
-      <h3 style="color:#0d6efd;">Recent 5 Orders</h3>
-
+      <h3>Recent 5 Orders</h3>
       <table>
         <thead>
           <tr>
@@ -211,91 +191,49 @@
             <th>Status</th>
           </tr>
         </thead>
-
         <tbody id="recentOrdersBody"></tbody>
       </table>
 
-      <p id="emptyMsg" style="text-align:center;color:#777;margin-top:15px;">
-        No orders found
-      </p>
+      <p id="emptyMsg" style="text-align:center;margin-top:15px;">No orders found</p>
     </div>
 
   </div>
 
-
-  <!-- FIREBASE LOGIC -->
-  <script type="module">
-    import { db, app } from "./firebase-init.js";
-
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-    import {
-      collection,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
-
-    const auth = getAuth(app);
-
-    /* ===== PROTECT PAGE ===== */
-    onAuthStateChanged(auth, user => {
-      if (!user || user.email !== "voguemart@gmail.com") {
-        window.location.href = "admin-login.html";
-      }
-    });
-
-    /* ===== LOGOUT ===== */
+  <!-- LOGOUT -->
+  <script>
     document.getElementById("logoutBtn").onclick = () => {
-      signOut(auth);
+      localStorage.removeItem("adminLoggedIn");
       window.location.href = "admin-login.html";
     };
+  </script>
 
-    /* ===== LOAD COUNTS ===== */
-    async function loadCounts() {
-      const usersSnap = await getDocs(collection(db, "customers"));
-      const ordersSnap = await getDocs(collection(db, "orders"));
-      const productsSnap = await getDocs(collection(db, "products"));
+  <!-- DUMMY DATA FOR ADMIN DEMO -->
+  <script>
+    document.getElementById("totalUsers").innerText = 4;
+    document.getElementById("totalOrders").innerText = 12;
+    document.getElementById("totalProducts").innerText = 8;
 
-      document.getElementById("totalUsers").innerText = usersSnap.size;
-      document.getElementById("totalOrders").innerText = ordersSnap.size;
-      document.getElementById("totalProducts").innerText = productsSnap.size;
-    }
+    const orders = [
+      { id: "ORD01", customer: "Arun", total: 1500, status: "Paid" },
+      { id: "ORD02", customer: "Priya", total: 900, status: "Paid" },
+    ];
 
-    /* ===== LOAD RECENT ORDERS ===== */
-    async function loadRecent() {
-      const snap = await getDocs(collection(db, "orders"));
-      const orders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const body = document.getElementById("recentOrdersBody");
 
-      const body = document.getElementById("recentOrdersBody");
-      const emptyMsg = document.getElementById("emptyMsg");
-
-      body.innerHTML = "";
-
-      if (orders.length === 0) {
-        emptyMsg.style.display = "block";
-        return;
-      }
-
+    if (orders.length === 0) {
+      emptyMsg.style.display = "block";
+    } else {
       emptyMsg.style.display = "none";
-
-      orders.slice(0, 5).forEach(o => {
+      orders.forEach(o => {
         body.innerHTML += `
           <tr>
             <td>${o.id}</td>
-            <td>${o.customer || "-"}</td>
-            <td>₹${o.total || 0}</td>
-            <td>${o.status || "Pending"}</td>
-          </tr>
-        `;
+            <td>${o.customer}</td>
+            <td>₹${o.total}</td>
+            <td>${o.status}</td>
+          </tr>`;
       });
     }
-
-    /* INITIAL LOAD */
-    loadCounts();
-    loadRecent();
   </script>
 
 </body>
