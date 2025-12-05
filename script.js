@@ -1,4 +1,9 @@
-// ===================== PRODUCT DATABASE =====================
+/* ============================================================
+   VOGUEMART - FRONTEND SCRIPT (USER SIDE ONLY)
+   Cleaned Version — No Admin Logic, No Firebase Mixed Code
+   ============================================================ */
+
+/* ---------------- PRODUCT LIST (STATIC FOR SHOP PAGE) ---------------- */
 const PRODUCTS = [
   {
     id: 1,
@@ -21,8 +26,7 @@ const PRODUCTS = [
     name: "Men Stretch Formal Pant",
     price: 314,
     category: "Men",
-    image:
-      "https://www.subtract.in/cdn/shop/files/Trouser3_9_1080x.jpg?v=1754677668",
+    image: "https://www.subtract.in/cdn/shop/files/Trouser3_9_1080x.jpg?v=1754677668",
   },
   {
     id: 4,
@@ -37,8 +41,7 @@ const PRODUCTS = [
     name: "Men Hoodie Black",
     price: 699,
     category: "Men",
-    image:
-      "https://fastcolors.in/cdn/shop/files/printed_Sweatshirt_hoodies_for_men_Black-BACK.jpg?v=1751898394",
+    image: "https://fastcolors.in/cdn/shop/files/printed_Sweatshirt_hoodies_for_men_Black-BACK.jpg?v=1751898394",
   },
   {
     id: 6,
@@ -66,7 +69,7 @@ const PRODUCTS = [
   },
 ];
 
-// ===================== RENDER PRODUCTS (SHOP PAGE) =====================
+/* ---------------- RENDER SHOP PRODUCTS ---------------- */
 function renderProducts(list) {
   const container = document.querySelector(".products-container");
   if (!container) return;
@@ -94,7 +97,7 @@ function renderProducts(list) {
     .join("");
 }
 
-// ===================== CART & WISHLIST (GLOBAL) =====================
+/* ---------------- CART ---------------- */
 function addToCart(name, price, image) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -109,6 +112,7 @@ function addToCart(name, price, image) {
   alert(`Added "${name}" to Cart 🛒`);
 }
 
+/* ---------------- WISHLIST ---------------- */
 function addToWishlist(name, price, image) {
   let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
   const exists = wishlist.find((item) => item.name === name);
@@ -122,201 +126,11 @@ function addToWishlist(name, price, image) {
   }
 }
 
-// ===================== TOAST NOTIFICATION =====================
-function notify(title, msg, type = "success") {
-  const toast = document.createElement("div");
-  toast.className = `toast toast-${type}`;
-
-  let icon = "✔️";
-  if (type === "error") icon = "❌";
-  if (type === "warning") icon = "⚠️";
-  if (type === "info") icon = "ℹ️";
-
-  toast.innerHTML = `
-    <div class="toast-icon">${icon}</div>
-    <div class="toast-content">
-      <div class="toast-title">${title}</div>
-      <div class="toast-msg">${msg}</div>
-    </div>
-  `;
-
-  document.body.appendChild(toast);
-
-  setTimeout(() => toast.remove(), 4000);
-}
-
-// ===================== ADMIN DASHBOARD (SAFE) =====================
-const API_BASE = "http://localhost:4000/api/admin";
-
-const usersCountEl = document.getElementById("usersCount");
-const ordersCountEl = document.getElementById("ordersCount");
-const productsCountEl = document.getElementById("productsCount");
-const ordersTbody = document.getElementById("ordersTbody");
-const productForm = document.getElementById("productForm");
-const logoutBtn = document.getElementById("logoutBtn");
-
-// Admin side nav buttons (only if present)
-document.querySelectorAll(".nav-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".nav-btn")
-      .forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    const target = btn.dataset.target;
-    document.querySelectorAll("main .section").forEach((sec) => {
-      if (sec.id === target) sec.classList.remove("hidden");
-      else sec.classList.add("hidden");
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-});
-
-async function loadDashboard() {
-  // If there is no dashboard element, skip (normal pages)
-  if (!usersCountEl && !ordersCountEl && !productsCountEl && !ordersTbody)
-    return;
-
-  try {
-    const res = await fetch(`${API_BASE}/dashboard`);
-    if (!res.ok) throw new Error(`Status ${res.status}`);
-    const data = await res.json();
-
-    if (usersCountEl) usersCountEl.innerText = data.totalUsers ?? 0;
-    if (ordersCountEl) ordersCountEl.innerText = data.totalOrders ?? 0;
-    if (productsCountEl) productsCountEl.innerText = data.totalProducts ?? 0;
-
-    if (ordersTbody && Array.isArray(data.recentOrders)) {
-      ordersTbody.innerHTML = "";
-      data.recentOrders.slice(0, 10).forEach((o) => {
-        const tr = document.createElement("tr");
-        const id = o.id ?? o._id ?? "—";
-        const user = o.userName ?? o.user ?? o.customer ?? "—";
-        const total = o.total ?? o.amount ?? 0;
-        const status = o.status ?? "—";
-        tr.innerHTML = `<td>${id}</td><td>${user}</td><td>₹${total}</td><td>${status}</td>`;
-        ordersTbody.appendChild(tr);
-      });
-    }
-  } catch (err) {
-    console.error("Dashboard Error:", err);
-    notify("Error Loading Data", "Dashboard could not be refreshed.", "error");
-  }
-}
-
-// Add product (admin) – only if form exists
-if (productForm) {
-  productForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    try {
-      const fd = new FormData();
-      fd.append("name", document.getElementById("pname").value.trim());
-      fd.append("price", document.getElementById("pprice").value);
-      fd.append("category", document.getElementById("pcat").value.trim());
-      fd.append("description", document.getElementById("pdesc").value.trim());
-      const fileEl = document.getElementById("pimage");
-      if (!fileEl.files.length) {
-        notify("No Image Selected", "Please upload a product image.", "warning");
-        return;
-      }
-      fd.append("image", fileEl.files[0]);
-
-      const res = await fetch(`${API_BASE}/products`, {
-        method: "POST",
-        body: fd,
-      });
-
-      if (!res.ok) {
-        const txt = await res.text();
-        throw new Error(`Add product failed: ${res.status} ${txt}`);
-      }
-
-      await res.json();
-      notify("Product Added", "Your product was successfully created.", "success");
-      productForm.reset();
-      loadDashboard();
-    } catch (err) {
-      console.error("Add Product Error:", err);
-      notify("Error Adding Product", "Something went wrong while saving.", "error");
-    }
-  });
-}
-
-// Logout (admin)
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
-    notify("Logged Out", "See you again!", "info");
-    setTimeout(() => {
-      window.location.href = "login.html";
-    }, 1200);
-  });
-}
-
-// ===================== PAGE INITIALISATION =====================
+/* ---------------- DARK MODE ---------------- */
 document.addEventListener("DOMContentLoaded", () => {
-  // -------- Shop page: render all products --------
-  if (document.querySelector(".products-container")) {
-    renderProducts(PRODUCTS);
-  }
-
-  // -------- Shop Search --------
-  const shopSearch = document.getElementById("shop-search");
-  if (shopSearch) {
-    shopSearch.addEventListener("input", () => {
-      const text = shopSearch.value.toLowerCase();
-      const filtered = PRODUCTS.filter((p) =>
-        p.name.toLowerCase().includes(text)
-      );
-      renderProducts(filtered);
-    });
-  }
-
-  // -------- Category Filter (Shop vm-chip buttons) --------
-  const chips = document.querySelectorAll(".vm-chip");
-  if (chips.length) {
-    chips.forEach((chip) => {
-      chip.addEventListener("click", () => {
-        chips.forEach((c) => c.classList.remove("vm-chip-active"));
-        chip.classList.add("vm-chip-active");
-
-        const category = chip.textContent.trim();
-        if (category === "All") {
-          renderProducts(PRODUCTS);
-        } else {
-          const filtered = PRODUCTS.filter((p) => p.category === category);
-          renderProducts(filtered);
-        }
-      });
-    });
-  }
-
-  // -------- Home: "Shop Now" scroll (only if button exists) --------
-  const heroShop = document.getElementById("heroShop");
-  if (heroShop) {
-    heroShop.addEventListener("click", () => {
-      const productsSection = document.getElementById("products");
-      if (productsSection) {
-        productsSection.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.location.href = "shop.html";
-      }
-    });
-  }
-
-  // Old shopBtn (if still used anywhere)
-  const shopBtn = document.getElementById("shopBtn");
-  if (shopBtn) {
-    shopBtn.addEventListener("click", () => {
-      window.location.href = "shop.html";
-    });
-  }
-
-  // -------- Dark Mode Toggle --------
   const toggle = document.getElementById("themeToggle");
 
   if (toggle) {
-    // Apply saved theme on load
     if (localStorage.getItem("theme") === "dark") {
       document.body.classList.add("dark");
       toggle.textContent = "☀️";
@@ -335,11 +149,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // -------- Dashboard load (only on admin page) --------
-  loadDashboard();
+  /* SHOP PAGE AUTO RENDER */
+  if (document.querySelector(".products-container")) {
+    renderProducts(PRODUCTS);
+  }
 
-  // -------- Demo notification on normal pages --------
-  if (!usersCountEl && !ordersCountEl && !productsCountEl && !ordersTbody) {
-    notify("VogueMart", "Premium Notification Working!", "info");
+  /* FILTER BUTTONS */
+  const chips = document.querySelectorAll(".vm-chip");
+  if (chips.length) {
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chips.forEach((c) => c.classList.remove("vm-chip-active"));
+        chip.classList.add("vm-chip-active");
+
+        const category = chip.textContent.trim();
+        if (category === "All") {
+          renderProducts(PRODUCTS);
+        } else {
+          const filtered = PRODUCTS.filter((p) => p.category === category);
+          renderProducts(filtered);
+        }
+      });
+    });
   }
 });
+
