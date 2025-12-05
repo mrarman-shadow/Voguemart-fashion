@@ -111,6 +111,12 @@
 
   </style>
 </head>
+<script>
+  if (localStorage.getItem("adminLoggedIn") !== "true") {
+    // 🚫 Not logged in as admin → back to admin login
+    window.location.href = "admin-login.html";
+  }
+</script>
 
 <body>
 
@@ -244,5 +250,6 @@
 
 </body>
 </html>
+
 
 
