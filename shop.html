@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VogueMart | Shop</title>
+
+  <link rel="stylesheet" href="./Style.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  
+<li><button id="themeToggle" class="theme-btn">🌙</button></li>
+
+  <!-- Navbar (same brand look) -->
+<nav class="navbar">
+  <h1 class="brand">VogueMart</h1>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="wishlist.html">Wishlist</a></li>
+    <li><a href="login.html">Account</a></li>
+    <li><a href="cart.html">Cart</a></li>
+  </ul>
+</nav>
+
+
+  <main class="page-content">
+  <header class="shop-header">
+  <h2 style="text-align:center; margin-top:90px; color:#f8d0a4;">
+    Welcome to VogueMart Shop
+  </h2>
+
+</header>
+
+<!-- Search -->
+<section class="vm-search-hero vm-search-hero--shop">
+  <div class="vm-search-bar">
+    <i class="fa-solid fa-magnifying-glass vm-search-icon"></i>
+    <input
+      type="text"
+      id="shop-search"
+      class="vm-search-input"
+      placeholder="Search in all products..."
+    />
+  </div>
+
+  <div class="vm-chip-row">
+    <button class="vm-chip vm-chip-active">All</button>
+    <button class="vm-chip">Men</button>
+    <button class="vm-chip">Women</button>
+    <button class="vm-chip">Kids</button>
+    <button class="vm-chip">Ethnic</button>
+    <button class="vm-chip">Accessories</button>
+  </div>
+</section>
+
+<!-- AUTO GENERATED PRODUCTS -->
+<div class="products-container"></div>
+
+   
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="shop.html">🛍 Shop</a>
+    <a href="wishlist.html">❤️ Wishlist</a>
+    <a href="login.html">👤 Account</a>
+    <a href="cart.html">🛒 Cart</a>
+  </div>
+</body>
+</html>
