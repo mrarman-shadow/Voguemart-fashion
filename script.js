@@ -343,12 +343,15 @@ document.addEventListener("DOMContentLoaded", () => {
     notify("VogueMart", "Premium Notification Working!", "info");
   }
 });
+/* ================= MOBILE MENU FIX ================= */
+const menuBtn = document.getElementById("menuBtn");
+const navMenu = document.getElementById("navMenu");
 
-  /* MOBILE MENU */
-  document.getElementById("menuBtn").onclick = () => {
-    document.getElementById("navMenu").classList.toggle("show-menu");
-  };
-});
+if (menuBtn) {
+  menuBtn.addEventListener("click", () => {
+    navMenu.classList.toggle("show-menu");
+  });
+}
 
 
 
