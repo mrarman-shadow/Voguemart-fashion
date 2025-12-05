@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orders – Admin – VogueMart</title>
+  <title>Orders – VogueMart Admin</title>
 
   <link rel="stylesheet" href="style.css">
 
@@ -102,19 +102,14 @@
       font-weight: 600;
     }
 
-    select, .btn-small {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: none;
-      font-size: 13px;
-      cursor: pointer;
-    }
-
     .btn-small {
+      padding: 6px 12px;
+      border: none;
       background: #ff6b5a;
       color: #fff;
-      padding: 6px 14px;
-      font-weight: bold;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -129,7 +124,7 @@
     <a href="add-product.html">Add Product</a>
     <a href="customers.html">Customers</a>
     <a href="orders.html" class="active">Orders</a>
-    <a href="#" id="logoutBtn" style="color:#ff7b7b">Logout</a>
+    <a href="admin-login.html" style="color:#ff7b7b">Logout</a>
   </div>
 
   <!-- MAIN -->
@@ -155,36 +150,28 @@
         <tbody id="ordersBody"></tbody>
       </table>
 
-      <p id="ordersEmpty" style="text-align:center;margin-top:14px;">No orders found</p>
+      <p id="emptyMsg" style="text-align:center;margin-top:14px;">No orders found</p>
     </div>
   </div>
 
-  <!-- LOGOUT -->
   <script>
-    document.getElementById("logoutBtn").onclick = () => {
-      localStorage.removeItem("adminLoggedIn");
-      window.location.href = "admin-login.html";
-    };
-  </script>
-
-  <!-- DUMMY ORDERS -->
-  <script>
-    let orders = [
-      { id: "ORD01", customer: "Shadow", product: "T-Shirt", total: 999, status: "Pending", date: "2025-10-25" },
-      { id: "ORD02", customer: "Priya", product: "Ladies Kurti", total: 786, status: "Shipped", date: "2025-02-12" },
-      { id: "ORD03", customer: "Arun", product: "Formal Shirt", total: 799, status: "Delivered", date: "2025-02-01" }
+    // DUMMY DATA ALWAYS WORKS
+    const orders = [
+      { id: "ORD01", customer: "Shadow", product: "T-Shirt", total: 999, status: "Pending",   date: "2025-10-25" },
+      { id: "ORD02", customer: "Priya",  product: "Ladies Kurti", total: 786, status: "Shipped",  date: "2025-02-12" },
+      { id: "ORD03", customer: "Arun",   product: "Formal Shirt", total: 799, status: "Delivered", date: "2025-02-01" }
     ];
 
     const body = document.getElementById("ordersBody");
-    const emptyEl = document.getElementById("ordersEmpty");
+    const emptyMsg = document.getElementById("emptyMsg");
 
     function render(list) {
       body.innerHTML = "";
       if (!list.length) {
-        emptyEl.style.display = "block";
+        emptyMsg.style.display = "block";
         return;
       }
-      emptyEl.style.display = "none";
+      emptyMsg.style.display = "none";
 
       list.forEach(o => {
         body.innerHTML += `
@@ -193,19 +180,9 @@
             <td>${o.customer}</td>
             <td>${o.product}</td>
             <td>₹${o.total}</td>
-            <td>
-              <select onchange="changeStatus('${o.id}', this.value)">
-                <option ${o.status === "Pending" ? "selected" : ""}>Pending</option>
-                <option ${o.status === "Paid" ? "selected" : ""}>Paid</option>
-                <option ${o.status === "Shipped" ? "selected" : ""}>Shipped</option>
-                <option ${o.status === "Delivered" ? "selected" : ""}>Delivered</option>
-                <option ${o.status === "Cancelled" ? "selected" : ""}>Cancelled</option>
-              </select>
-            </td>
+            <td>${o.status}</td>
             <td>${o.date}</td>
-            <td>
-              <button class="btn-small" onclick="viewOrder('${o.id}')">View</button>
-            </td>
+            <td><button class="btn-small">View</button></td>
           </tr>
         `;
       });
@@ -218,24 +195,10 @@
       const filtered = orders.filter(o =>
         o.id.toLowerCase().includes(q) ||
         o.customer.toLowerCase().includes(q) ||
-        o.status.toLowerCase().includes(q)
+        o.product.toLowerCase().includes(q)
       );
       render(filtered);
     });
-
-    window.changeStatus = function(id, status) {
-      const o = orders.find(x => x.id === id);
-      if (o) o.status = status;
-      alert(`Order ${id} → ${status}`);
-    };
-
-    window.viewOrder = function(id) {
-      const o = orders.find(x => x.id === id);
-      if (!o) return;
-      alert(
-        `Order ID: ${o.id}\nCustomer: ${o.customer}\nProduct: ${o.product}\nTotal: ₹${o.total}\nStatus: ${o.status}\nDate: ${o.date}`
-      );
-    };
   </script>
 
 </body>
