@@ -232,6 +232,56 @@ footer {
   background: #024558;
   color: #f8d0a4;
 }
+/* ========== PERFECT MOBILE NAVBAR FIX ========== */
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    right: 10px;
+    top: 70px;
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 12px;
+    width: 200px;
+    z-index: 9999;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-links.show-menu {
+    display: flex !important;
+  }
+
+  .nav-links li {
+    margin: 12px 0;
+    text-align: left;
+  }
+
+  .nav-links a {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .admin-btn {
+    color: red !important;
+    font-weight: 700;
+  }
+}
+
 
 
 
